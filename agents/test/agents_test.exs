@@ -2,7 +2,7 @@ defmodule AgentsTest do
   use ExUnit.Case
   doctest Agents
 
-  test "greets the world" do
-    assert Agents.hello() == :world
+  test "Agent can read" do
+    assert Agents.read() == :readok
   end
 end
