@@ -1,4 +1,4 @@
-run: build
+run:
 	./agents/agents -f car_io/captures
 
 build: deps

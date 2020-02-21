@@ -17,19 +17,18 @@ defmodule Agents do
     {:ok, folder_content} = File.ls(folder)
     pngs = Enum.filter(folder_content, fn x -> Path.extname(x) == ".png" end)
     sorted_pngs = Enum.sort(pngs)
-    IO.puts "The newest png is #{List.last(sorted_pngs)}"
-    IO.puts "The oldest png is #{List.first(sorted_pngs)}"
+    newest_file = List.last(sorted_pngs)
+    IO.puts "The newest png is #{newest_file}"
 
-    imgs = Enum.map(sorted_pngs, fn x -> Imagineer.load(Path.join([folder, x])) end)
+    {:ok, png} = Imagineer.load(Path.join([folder, newest_file]))
 
-    png_dict = Enum.into(Enum.zip(sorted_pngs, imgs), %{})
 
-    {:ok, newest_img} = png_dict[List.first(sorted_pngs)]
 
-    IO.puts "Length first dim #{length(newest_img.pixels)}"
-    IO.puts "Length second dim #{length(Enum.at(newest_img.pixels, 0))}"
 
     # Now, send an image out to a process?
     :readok
   end
+
+  def process(png) do
+    IO.puts "Image dimension: #{length(png.pixels)} X #{length(List.first(png.pixels))}"
 end
